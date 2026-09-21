@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Para Astrid 🌼</title>
+<style>
+  :root{
+    --sky1:#fff4e0;
+    --sky2:#ffe0b0;
+    --card:#fffef9;
+    --ink:#5b4630;
+    --accent:#e0762a;
+    --petal-a:#ffdd5c;
+    --petal-b:#ffc93c;
+    --petal-c:#ffb42e;
+    --leaf:#8bc06a;
+    --stem:#6ba24a;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --sky1:#241d10;
+      --sky2:#2f2410;
+      --card:#332918;
+      --ink:#f2e4c8;
+    }
+  }
+  :root[data-theme="dark"]{
+    --sky1:#241d10;
+    --sky2:#2f2410;
+    --card:#332918;
+    --ink:#f2e4c8;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    height:100%;
+    width:100%;
+    font-family:'Segoe UI', system-ui, -apple-system, sans-serif;
+    background:linear-gradient(180deg, var(--sky1), var(--sky2));
+    overflow-x:hidden;
+    position:relative;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+
+  .stage{
+    min-height:100%;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .bg-blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(2px);
+    opacity:0.5;
+    pointer-events:none;
+    z-index:0;
+  }
+  .bg-blob.b1{ width:220px; height:220px; background:radial-gradient(circle,#ffe9b0,transparent 70%); top:-60px; left:-60px; }
+  .bg-blob.b2{ width:260px; height:260px; background:radial-gradient(circle,#ffd98a,transparent 70%); bottom:-80px; right:-70px; }
+
+  /* CLOSED: a folded paper flower bud waiting to bloom */
+  .pot{
+    width:min(300px, 85vw);
+    cursor:pointer;
+    position:relative;
+    z-index:1;
+    text-align:center;
+    transition:transform 0.4s ease;
+  }
+  .pot:hover{ transform:scale(1.04); }
+  .bud-circle{
+    width:220px;
+    height:220px;
+    margin:0 auto 18px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #fff4d6, #ffdd7a 60%, #ffc93c);
+    box-shadow:0 20px 45px rgba(180,120,10,0.3), inset 0 0 0 6px rgba(255,255,255,0.4);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    animation:sway 3s ease-in-out infinite;
+  }
+  @keyframes sway{
+    0%,100%{ transform:rotate(-2deg) scale(1); }
+    50%{ transform:rotate(2deg) scale(1.02); }
+  }
+  .bud-emoji{ font-size:70px; }
+  .pot-label{
+    color:#7a5010;
+    font-size:15px;
+    font-weight:600;
+    opacity:0.85;
+  }
+  .pot-hint{
+    color:#8a6420;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    margin-top:6px;
+    opacity:0.7;
+  }
+
+  .stage.hidden-pot .pot{
+    animation:popAway 0.5s ease forwards;
+  }
+  @keyframes popAway{
+    to{ transform:scale(0.5); opacity:0; }
+  }
+
+  /* CARD REVEAL */
+  .card{
+    width:min(420px, 92vw);
+    background:var(--card);
+    border-radius:28px;
+    box-shadow:0 30px 60px rgba(120,80,10,0.3);
+    padding:40px 30px 34px;
+    text-align:center;
+    position:relative;
+    display:none;
+    z-index:1;
+    opacity:0;
+    transform:translateY(30px) scale(0.9);
+  }
+  .card.show{
+    display:block;
+    animation:riseIn 0.9s cubic-bezier(.22,1,.36,1) forwards;
+  }
+  @keyframes riseIn{
+    to{ opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  .flower-wrap{
+    width:190px;
+    margin:0 auto 4px;
+  }
+  .flower-wrap svg{ width:100%; height:auto; overflow:visible; }
+
+  .petal-w{
+    transform-origin:center;
+    animation:unfurl 1s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  .petal-w:nth-child(1){ animation-delay:0.05s; }
+  .petal-w:nth-child(2){ animation-delay:0.13s; }
+  .petal-w:nth-child(3){ animation-delay:0.21s; }
+  .petal-w:nth-child(4){ animation-delay:0.29s; }
+  .petal-w:nth-child(5){ animation-delay:0.37s; }
+  .petal-w:nth-child(6){ animation-delay:0.45s; }
+  @keyframes unfurl{
+    from{ transform:scale(0.15) rotate(-40deg); opacity:0; }
+    to{ transform:scale(1) rotate(0deg); opacity:1; }
+  }
+  .flower-center-w{
+    animation:centerPop 0.6s ease 0.8s both;
+  }
+  @keyframes centerPop{
+    from{ transform:scale(0); opacity:0; }
+    to{ transform:scale(1); opacity:1; }
+  }
+  .stem-w, .leaf-w{
+    animation:growUp 0.7s ease 0.15s both;
+    transform-origin:bottom center;
+  }
+  @keyframes growUp{
+    from{ transform:scaleY(0); opacity:0; }
+    to{ transform:scaleY(1); opacity:1; }
+  }
+
+  .kicker{
+    color:var(--accent);
+    font-size:13px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    font-weight:700;
+    margin:8px 0 2px;
+    opacity:0;
+    animation:fadeUp 0.7s ease 1.05s forwards;
+  }
+  .title{
+    font-size:26px;
+    color:var(--ink);
+    margin:0 0 18px;
+    font-weight:700;
+    opacity:0;
+    animation:fadeUp 0.7s ease 1.2s forwards;
+  }
+  .message{
+    font-size:17px;
+    line-height:1.65;
+    color:var(--ink);
+    margin:0;
+    opacity:0;
+    animation:fadeUp 0.7s ease 1.4s forwards;
+  }
+  .message .name{
+    color:var(--accent);
+    font-weight:700;
+  }
+  .signature{
+    margin-top:22px;
+    font-size:14px;
+    color:var(--ink);
+    opacity:0.7;
+    font-style:italic;
+    opacity:0;
+    animation:fadeUp 0.7s ease 1.6s forwards;
+  }
+  @keyframes fadeUp{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .sparkle{
+    position:absolute;
+    font-size:18px;
+    opacity:0;
+    animation:sparkle 1.8s ease-in-out infinite;
+  }
+  .sparkle.s1{ top:12px; left:20px; animation-delay:1.7s; }
+  .sparkle.s2{ top:26px; right:24px; animation-delay:2.1s; }
+  .sparkle.s3{ bottom:20px; left:28px; animation-delay:2.4s; }
+  @keyframes sparkle{
+    0%,100%{ opacity:0; transform:scale(0.6) rotate(0deg); }
+    50%{ opacity:1; transform:scale(1.1) rotate(20deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-blob b1"></div>
+<div class="bg-blob b2"></div>
+
+<div class="stage" id="stage">
+  <div class="pot" id="pot" onclick="openCard()">
+    <div class="bud-circle">
+      <span class="bud-emoji">🌱</span>
+    </div>
+    <div class="pot-label">Un regalo para Astrid</div>
+    <div class="pot-hint">Toca para ver florecer</div>
+  </div>
+
+  <div class="card" id="card">
+    <span class="sparkle s1">✨</span>
+    <span class="sparkle s2">🌸</span>
+    <span class="sparkle s3">✨</span>
+
+    <div class="flower-wrap">
+      <svg viewBox="0 0 200 230" xmlns="http://www.w3.org/2000/svg">
+        <!-- stem -->
+        <path class="stem-w" d="M100 140 C 94 175, 106 195, 100 225" stroke="#6ba24a" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <!-- leaves -->
+        <path class="leaf-w" d="M100 175 C 78 168, 62 184, 56 200 C 80 201, 96 190, 100 175 Z" fill="#8bc06a"/>
+        <path class="leaf-w" d="M100 195 C 122 189, 138 205, 144 219 C 120 221, 105 210, 100 195 Z" fill="#6ba24a"/>
+
+        <!-- rounded watercolor-style petals -->
+        <g transform="translate(100,100)">
+          <g class="petal-w">
+            <ellipse cx="0" cy="-46" rx="26" ry="38" fill="var(--petal-a)"/>
+          </g>
+          <g class="petal-w">
+            <ellipse cx="40" cy="-23" rx="26" ry="38" fill="var(--petal-b)" transform="rotate(60 40 -23)"/>
+          </g>
+          <g class="petal-w">
+            <ellipse cx="40" cy="23" rx="26" ry="38" fill="var(--petal-c)" transform="rotate(120 40 23)"/>
+          </g>
+          <g class="petal-w">
+            <ellipse cx="0" cy="46" rx="26" ry="38" fill="var(--petal-a)" transform="rotate(180 0 46)"/>
+          </g>
+          <g class="petal-w">
+            <ellipse cx="-40" cy="23" rx="26" ry="38" fill="var(--petal-b)" transform="rotate(240 -40 23)"/>
+          </g>
+          <g class="petal-w">
+            <ellipse cx="-40" cy="-23" rx="26" ry="38" fill="var(--petal-c)" transform="rotate(300 -40 -23)"/>
+          </g>
+        </g>
+
+        <!-- center -->
+        <circle class="flower-center-w" cx="100" cy="100" r="24" fill="#f2960c"/>
+        <circle class="flower-center-w" cx="100" cy="100" r="24" fill="url(#centerGrad)" opacity="0.55"/>
+        <defs>
+          <radialGradient id="centerGrad" cx="35%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#fff3c4"/>
+            <stop offset="100%" stop-color="#d97706"/>
+          </radialGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <p class="kicker">La flor amarilla</p>
+    <h1 class="title">Para ti, Astrid 🌼</h1>
+    <p class="message">
+      Te regalo esta flor amarilla<br>
+      porque <span class="name">eres especial</span>.
+    </p>
+    <p class="signature">Con cariño</p>
+  </div>
+</div>
+
+<script>
+  function openCard(){
+    const stage = document.getElementById('stage');
+    const card = document.getElementById('card');
+    stage.classList.add('hidden-pot');
+    setTimeout(() => {
+      card.classList.add('show');
+    }, 350);
+  }
+</script>
+
+</body>
+</html>
