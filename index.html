@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>"To Be": Qué es y cómo se usa — Guía (Español)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #00b894 0%, #0984e3 100%);
+    min-height: 100vh; padding: 30px 15px;
+    color: #2d3436;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  header {
+    text-align: center; color: #fff; margin-bottom: 35px;
+    text-shadow: 0 2px 8px rgba(0,0,0,.25);
+  }
+  header h1 { font-size: 2.3rem; letter-spacing: 1px; }
+  header p  { font-size: 1.1rem; margin-top: 8px; opacity: .92; }
+
+  .folder {
+    background: #fff; border-radius: 14px; margin-bottom: 18px;
+    box-shadow: 0 6px 24px rgba(0,0,0,.15); overflow: hidden;
+    transition: transform .2s;
+  }
+  .folder:hover { transform: translateY(-2px); }
+
+  .folder-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 20px 24px; cursor: pointer; user-select: none;
+    background: linear-gradient(90deg, #fff 0%, #f0fff9 100%);
+    border-left: 6px solid #00b894;
+  }
+  .folder-header .icon { font-size: 1.8rem; }
+  .folder-header h2 { font-size: 1.2rem; flex: 1; color: #2d3436; }
+  .folder-header .arrow {
+    font-size: 1.3rem; color: #00b894;
+    transition: transform .3s;
+  }
+  .folder.open .folder-header .arrow { transform: rotate(180deg); }
+  .folder.open .folder-header { border-left-color: #0984e3; }
+
+  .folder-body {
+    max-height: 0; overflow: hidden; transition: max-height .45s ease;
+  }
+  .folder.open .folder-body { max-height: 3500px; }
+  .folder-content { padding: 24px 28px 30px; }
+
+  .ejemplo {
+    background: #f0fff9; border-left: 4px solid #00b894;
+    border-radius: 8px; padding: 14px 18px; margin: 14px 0;
+  }
+  .ejemplo .titulo {
+    font-weight: 700; color: #00b894; margin-bottom: 8px;
+    font-size: .95rem; text-transform: uppercase; letter-spacing: .5px;
+  }
+  .ejemplo ul { list-style: none; }
+  .ejemplo li {
+    padding: 5px 0; font-size: 1.05rem;
+    border-bottom: 1px dashed #c8f7dc;
+  }
+  .ejemplo li:last-child { border-bottom: none; }
+  .es { color: #2d3436; }
+  .en { color: #0984e3; font-weight: 600; }
+  .tag {
+    display: inline-block; background: #0984e3; color: #fff;
+    font-size: .75rem; padding: 2px 8px; border-radius: 10px;
+    margin-right: 8px; vertical-align: middle;
+  }
+  .tag.es-tag { background: #00b894; }
+
+  table {
+    width: 100%; border-collapse: collapse; margin: 14px 0;
+    border-radius: 8px; overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  }
+  th {
+    background: #00b894; color: #fff; padding: 12px 14px;
+    text-align: left; font-size: .95rem;
+  }
+  td {
+    padding: 11px 14px; border-bottom: 1px solid #eee; font-size: 1rem;
+  }
+  tr:nth-child(even) td { background: #f0fff9; }
+  tr:last-child td { border-bottom: none; }
+
+  .tip {
+    background: #ffeaa7; border-left: 4px solid #fdcb6e;
+    border-radius: 8px; padding: 14px 18px; margin: 14px 0;
+    font-size: .98rem;
+  }
+  .tip strong { color: #d63031; }
+
+  .grupo {
+    display: flex; flex-wrap: wrap; gap: 12px; margin: 14px 0;
+  }
+  .card {
+    flex: 1; min-width: 140px;
+    background: linear-gradient(135deg, #00b894, #00cec9);
+    color: #fff; border-radius: 10px; padding: 16px;
+    text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,.12);
+  }
+  .card .forma { font-size: 1.6rem; font-weight: 800; }
+  .card .pron { font-size: .95rem; margin-top: 6px; opacity: .95; }
+
+  .contrac {
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; flex-wrap: wrap;
+    background: #f0fff9; border-left: 4px solid #0984e3;
+    border-radius: 8px; padding: 14px 18px; margin: 12px 0;
+    font-size: 1.15rem;
+  }
+  .contrac .full { color: #2d3436; }
+  .contrac .flecha { color: #0984e3; font-weight: 800; }
+  .contrac .short {
+    background: #0984e3; color: #fff; font-weight: 700;
+    padding: 4px 14px; border-radius: 14px;
+  }
+
+  .resumen {
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+    color: #fff; border-radius: 10px; padding: 20px 24px; margin-top: 10px;
+  }
+  .resumen h3 { margin-bottom: 10px; font-size: 1.15rem; }
+  .resumen ul { list-style: none; }
+  .resumen li { padding: 4px 0; font-size: 1.03rem; }
+
+  footer {
+    text-align: center; color: rgba(255,255,255,.75);
+    margin-top: 40px; font-size: .85rem;
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.5rem; }
+    .folder-header { padding: 16px 14px; }
+    .folder-content { padding: 18px 16px 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>📗 &laquo;TO BE&raquo; &mdash; QUÉ ES Y CÓMO SE USA</h1>
+  <p>Guía para exponer &bull; Versión en español</p>
+</header>
+
+<!-- ══════════════ CARPETA 1 ══════════════ -->
+<div class="folder open" onclick="toggle(this)">
+  <div class="folder-header">
+    <span class="icon">📁</span>
+    <h2>1️⃣ &nbsp;Qué es y cómo se usa</h2>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="folder-body">
+    <div class="folder-content" onclick="event.stopPropagation()">
+
+      <p><strong>¿Qué es?</strong> <em>To be</em> es el verbo más importante del inglés. Es lo que en español conocemos como <strong>«ser»</strong> y <strong>«estar»</strong>. ¡Un solo verbo para los dos!</p>
+
+      <p style="margin-top:14px;"><strong>¿Cómo se usa?</strong> Sirve para:</p>
+      <ul style="margin:12px 0 12px 22px; line-height:1.9;">
+        <li>Decir <strong>quién eres</strong> → <span class="en">I <b>am</b> Ana.</span> <span class="es">(Yo soy Ana.)</span></li>
+        <li>Decir <strong>cómo te sientes</strong> → <span class="en">She <b>is</b> happy.</span> <span class="es">(Ella está feliz.)</span></li>
+        <li>Decir <strong>dónde estás</strong> → <span class="en">We <b>are</b> at home.</span> <span class="es">(Estamos en casa.)</span></li>
+        <li>Describir <strong>cosas y personas</strong> → <span class="en">It <b>is</b> big.</span> <span class="es">(Es grande.)</span></li>
+      </ul>
+
+      <div class="tip">💡 <strong>Dato clave:</strong> Este verbo es tan común que se usa en casi <b>cada conversación</b>. Lo usas desde el primer segundo: <b>«Hi! How <u>are</u> you?»</b></div>
+
+      <div class="ejemplo">
+        <div class="titulo">Frases del día a día con to be</div>
+        <ul>
+          <li><span class="tag">EN</span><span class="en">I <b>am</b> hungry.</span> &nbsp;<span class="tag es-tag">ES</span><span class="es">Tengo hambre.</span></li>
+          <li><span class="tag">EN</span><span class="en">The class <b>is</b> boring.</span> &nbsp;<span class="tag es-tag">ES</span><span class="es">La clase es aburrida.</span></li>
+          <li><span class="tag">EN</span><span class="en">My friends <b>are</b> here!</span> &nbsp;<span class="tag es-tag">ES</span><span class="es">¡Mis amigos están aquí!</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CARPETA 2 ══════════════ -->
+<div class="folder" onclick="toggle(this)">
+  <div class="folder-header">
+    <span class="icon">📁</span>
+    <h2>2️⃣ &nbsp;Introducción: ¿qué significa?</h2>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="folder-body">
+    <div class="folder-content" onclick="event.stopPropagation()">
+
+      <p><strong>Significado:</strong> <em>To be</em> = <strong>ser</strong> + <strong>estar</strong>. En inglés <b>no hay dos verbos</b> como en español; hay uno solo que hace el trabajo de los dos.</p>
+
+      <table>
+        <tr><th>En español usamos…</th><th>En inglés SIEMPRE es…</th></tr>
+        <tr><td><b>SER</b> (identidad, profesión, carácter)</td><td rowspan="2" style="vertical-align:middle; text-align:center; font-size:1.3rem; font-weight:800; color:#00b894;">TO BE</td></tr>
+        <tr><td><b>ESTAR</b> (estado, emoción, lugar)</td></tr>
+      </table>
+
+      <div class="ejemplo">
+        <div class="titulo">¿Ser o Estar? → ¡Da igual! Es to be</div>
+        <ul>
+          <li><span class="es">Ella <b>es</b> profesora. (ser)</span> → <span class="en">She <b>is</b> a teacher.</span></li>
+          <li><span class="es">Ella <b>está</b> cansada. (estar)</span> → <span class="en">She <b>is</b> tired.</span></li>
+          <li><span class="es">Nosotros <b>estamos</b> en casa. (estar)</span> → <span class="en">We <b>are</b> at home.</span></li>
+          <li><span class="es">Nosotros <b>somos</b> amigos. (ser)</span> → <span class="en">We <b>are</b> friends.</span></li>
+        </ul>
+      </div>
+
+      <div class="tip">💡 <strong>Fácil, ¿no?</strong> Ves que <b>«es»</b> y <b>«está»</b> se traducen igual: <b>is</b>. Y <b>«somos»</b> y <b>«estamos»</b>: <b>are</b>. Lo único que cambia es el pronombre.</div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CARPETA 3 ══════════════ -->
+<div class="folder" onclick="toggle(this)">
+  <div class="folder-header">
+    <span class="icon">📁</span>
+    <h2>3️⃣ &nbsp;Las 3 formas: am, is, are</h2>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="folder-body">
+    <div class="folder-content" onclick="event.stopPropagation()">
+
+      <p>El verbo <em>to be</em> tiene <strong>3 formas en presente</strong>, y cada una va con ciertos pronombres. ¡No se elige al azar!</p>
+
+      <div class="grupo">
+        <div class="card">
+          <div class="forma">AM</div>
+          <div class="pron">solo con <b>I</b><br>(yo)</div>
+        </div>
+        <div class="card" style="background:linear-gradient(135deg,#0984e3,#74b9ff);">
+          <div class="forma">IS</div>
+          <div class="pron">con <b>He · She · It</b><br>(él · ella · eso)</div>
+        </div>
+        <div class="card" style="background:linear-gradient(135deg,#6c5ce7,#a29bfe);">
+          <div class="forma">ARE</div>
+          <div class="pron">con <b>You · We · They</b><br>(tú · nosotros · ellos)</div>
+        </div>
+      </div>
+
+      <table>
+        <tr><th>Pronombre</th><th>Forma de <i>to be</i></th><th>Ejemplo</th><th>Traducción</th></tr>
+        <tr><td><b>I</b> (yo)</td><td style="color:#00b894; font-weight:800;">am</td><td>I <b>am</b> a student.</td><td>Yo soy estudiante.</td></tr>
+        <tr><td><b>You</b> (tú/ustedes)</td><td style="color:#6c5ce7; font-weight:800;">are</td><td>You <b>are</b> my friend.</td><td>Tú eres mi amigo.</td></tr>
+        <tr><td><b>He</b> (él)</td><td style="color:#0984e3; font-weight:800;">is</td><td>He <b>is</b> tall.</td><td>Él es alto.</td></tr>
+        <tr><td><b>She</b> (ella)</td><td style="color:#0984e3; font-weight:800;">is</td><td>She <b>is</b> happy.</td><td>Ella está feliz.</td></tr>
+        <tr><td><b>It</b> (eso/ello)</td><td style="color:#0984e3; font-weight:800;">is</td><td>It <b>is</b> cold.</td><td>Hace frío.</td></tr>
+        <tr><td><b>We</b> (nosotros)</td><td style="color:#6c5ce7; font-weight:800;">are</td><td>We <b>are</b> at home.</td><td>Estamos en casa.</td></tr>
+        <tr><td><b>They</b> (ellos)</td><td style="color:#6c5ce7; font-weight:800;">are</td><td>They <b>are</b> friends.</td><td>Ellos son amigos.</td></tr>
+      </table>
+
+      <div class="tip">💡 <strong>Truco para recordar:</strong><br>
+      🔹 <b>AM</b> → solo <b>YO</b> (es la más exclusiva)<br>
+      🔹 <b>IS</b> → él / ella / cosa → <b>tercera persona del singular</b><br>
+      🔹 <b>ARE</b> → tú / nosotros / ellos → <b>todo lo demás</b></div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CARPETA 4 ══════════════ -->
+<div class="folder" onclick="toggle(this)">
+  <div class="folder-header">
+    <span class="icon">📁</span>
+    <h2>4️⃣ &nbsp;Oraciones afirmativas</h2>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="folder-body">
+    <div class="folder-content" onclick="event.stopPropagation()">
+
+      <p><strong>¿Cómo se forman?</strong> Es el orden más simple: el verbo va <b>después del sujeto</b>, sin trucos.</p>
+      <p style="text-align:center; font-size:1.15rem; margin:16px 0; color:#00b894;">
+        <b>SUJETO + to be (am/is/are) + COMPLEMENTO</b>
+      </p>
+
+      <div class="ejemplo">
+        <div class="titulo">Ejemplos principales</div>
+        <ul>
+          <li><span class="tag">1</span><span class="en">I <b>am</b> a student.</span><br>
+              <span class="tag es-tag">ES</span><span class="es">Yo soy estudiante.</span></li>
+          <li style="margin-top:8px;"><span class="tag">2</span><span class="en">She <b>is</b> happy.</span><br>
+              <span class="tag es-tag">ES</span><span class="es">Ella está feliz.</span></li>
+          <li style="margin-top:8px;"><span class="tag">3</span><span class="en">They <b>are</b> friends.</span><br>
+              <span class="tag es-tag">ES</span><span class="es">Ellos son amigos.</span></li>
+        </ul>
+      </div>
+
+      <h3 style="margin:18px 0 8px; color:#00b894;">➕ Más ejemplos para practicar</h3>
+      <table>
+        <tr><th>Oración afirmativa</th><th>Traducción</th></tr>
+        <tr><td>I <b>am</b> from Mexico.</td><td>Yo soy de México.</td></tr>
+        <tr><td>You <b>are</b> very nice.</td><td>Tú eres muy amable.</td></tr>
+        <tr><td>He <b>is</b> my brother.</td><td>Él es mi hermano.</td></tr>
+        <tr><td>It <b>is</b> a cat.</td><td>Es un gato.</td></tr>
+        <tr><td>We <b>are</b> in the classroom.</td><td>Estamos en el salón.</td></tr>
+        <tr><td>They <b>are</b> 15 years old.</td><td>Ellos tienen 15 años.</td></tr>
+      </table>
+
+      <div class="tip">💡 <strong>Ojo:</strong> En afirmativa <b>nunca</b> se pone nada entre el sujeto y el verbo. ❌ <s>I today am happy</s> → ✅ <b>I am happy today.</b></div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CARPETA 5 ══════════════ -->
+<div class="folder" onclick="toggle(this)">
+  <div class="folder-header">
+    <span class="icon">📁</span>
+    <h2>5️⃣ &nbsp;Contracciones (I'm, you're, he's…)</h2>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="folder-body">
+    <div class="folder-content" onclick="event.stopPropagation()">
+
+      <p><strong>¿Qué son?</strong> En el habla natural, casi nadie dice la forma completa. Las personas <strong>unen el pronombre y el verbo</strong> para hablar más rápido. ¡Suena más fluido y nativo!</p>
+
+      <div class="contrac"><span class="full">I am</span><span class="flecha">→</span><span class="short">I'm</span></div>
+      <div class="contrac"><span class="full">You are</span><span class="flecha">→</span><span class="short">You're</span></div>
+      <div class="contrac"><span class="full">He is</span><span class="flecha">→</span><span class="short">He's</span></div>
+      <div class="contrac"><span class="full">She is</span><span class="flecha">→</span><span class="short">She's</span></div>
+      <div class="contrac"><span class="full">It is</span><span class="flecha">→</span><span class="short">It's</span></div>
+      <div class="contrac"><span class="full">We are</span><span class="flecha">→</span><span class="short">We're</span></div>
+      <div class="contrac"><span class="full">They are</span><span class="flecha">→</span><span class="short">They're</span></div>
+
+      <div class="ejemplo">
+        <div class="titulo">¿Cómo suenan en frases reales?</div>
+        <ul>
+          <li><span class="en">I am a student.</span> → <span class="en"><b>I'm</b> a student.</span><br>
+              <span class="es">«Aiman estudiante» — suena natural y rápido.</span></li>
+          <li><span class="en">She is happy.</span> → <span class="en"><b>She's</b> happy.</span><br>
+              <span class="es">«Shís japi» — así lo oirás en películas y canciones.</span></li>
+          <li><span class="en">They are friends.</span> → <span class="en"><b>They're</b> friends.</span><br>
+              <span class="es">«Deir frends» — se pegan en una sola palabra.</span></li>
+        </ul>
+      </div>
+
+      <div class="tip">💡 <strong>¿Cuándo usarlas?</strong><br>
+      ✅ En conversación, chats, canciones y textos informales → <b>I'm tired.</b><br>
+      📝 En textos formales (ensayos, exámenes) es mejor la forma completa → <b>I am tired.</b><br>
+      ⚠️ Cuidado: <b>he's / she's / it's</b> también pueden ser <b>«he has / she has / it has»</b>. Se entiende por el contexto.</div>
+
+      <div class="resumen">
+        <h3>⚡ Resumen rápido</h3>
+        <ul>
+          <li>📗 <b>To be</b> = ser + estar</li>
+          <li>🅰️ <b>am</b> → I &nbsp;|&nbsp; <b>is</b> → he/she/it &nbsp;|&nbsp; <b>are</b> → you/we/they</li>
+          <li>✅ Afirmativa: <b>sujeto + to be + complemento</b></li>
+          <li>🗣️ Contracciones: I'm, you're, he's, she's, it's, we're, they're</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>📗 Material educativo — «To Be: Qué es y cómo se usa» · Versión en español</footer>
+</div>
+
+<script>
+function toggle(folder) {
+  folder.classList.toggle('open');
+}
+</script>
+</body>
+</html>
